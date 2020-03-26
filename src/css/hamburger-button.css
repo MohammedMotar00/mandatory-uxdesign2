@@ -1,49 +1,26 @@
-#menuToggle
-{
-  display: block;
-  position: relative;
-  top: 50px;
-  left: 50px;
-
+#menuToggle {
+  position: absolute;
+  top: 30px;
+  left: 10px;
   z-index: 1;
-
-  -webkit-user-select: none;
   user-select: none;
 }
 
-#menuToggle a
-{
-  text-decoration: none;
-  color: #232323;
-
-  transition: color 0.3s ease;
-}
-
-#menuToggle a:hover
-{
-  color: tomato;
-}
-
-#menuToggle input
-{
-  display: block;
-  width: 40px;
-  height: 32px;
+input {
   position: absolute;
-  top: -7px;
-  left: -5px;
-
+  top: -5px;
+  left: -4px;
+  width: 35px;
+  height: 31px;
   cursor: pointer;
-
-  opacity: 0; /* hide this */
-  z-index: 2; /*and place it over the hamburger  */
-  -webkit-touch-callout: none;
+  opacity: 0; /* gömer den */
+  z-index: 2; /*placerar den på hamburger button */
+  /* -webkit-touch-callout: none; */
 }
 
+span {
+  transform: translate(2px, 2px);
 
-
-#menuToggle span
-{
   display: block;
   width: 33px;
   height: 4px;
@@ -63,21 +40,11 @@
               opacity 0.55s ease;
 }
 
-#menuToggle span:first-child
-{
-  transform-origin: 0% 0%;
-}
-
-#menuToggle span:nth-last-child(2)
-{
-  transform-origin: 0% 100%;
-}
-
 /* Transform all the slices of hamburger into a crossmark. */
 #menuToggle input:checked ~ span
 {
   opacity: 1;
-  transform: rotate(45deg) translate(-2px, -1px);
+  transform: rotate(45deg) translate(5px, -1px);
   background: #232323;
 }
 
@@ -91,40 +58,64 @@
 /* Ohyeah and the last one should go the other direction */
 #menuToggle input:checked ~ span:nth-last-child(2)
 {
-  transform: rotate(-45deg) translate(0, -1px);
+  transform: rotate(-45deg) translate(0, 6px);
 }
-
-
-/* Make this absolute positioned at the top left of the screen */
-#menu
-{
-  position: absolute;
-  width: 50px;
-  margin: -76px 0 0 -50px;
-  padding: 50px;
-  padding-top: 75px;
-  background: #ededed;
-  list-style-type: none;
-  -webkit-font-smoothing: antialiased;
-  /* to stop flickering of text in safari */
-  display: none;
-  transform-origin: 0% 0%;
-  transform: translate(-100%, 0);
-  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-}
-
-#menu li
-{
-  padding: 10px 0;
-  font-size: 22px;
-  opacity: 1;
-}
-
-
 
 /* And let's slide it in from the left */
 #menuToggle input:checked ~ ul
 {
   transform: none;
   display: block;
+  opacity: .9;
+}
+
+/* Make this absolute positioned at the top left of the screen */
+#menu
+{
+  position: absolute;
+  top: -20px;
+  left: -11px;
+  opacity: 0;
+  width: 170px;
+  padding: 50px;
+  height: 513px;
+  background-color: #ededed;
+  list-style-type: none;
+  /* -webkit-font-smoothing: antialiased; */
+  /* to stop flickering of text in safari */
+  /* display: none; */
+  /* transform-origin: 0% 0%; */
+  transform: translateX(-100%);
+  transition: all 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+
+#menuToggle a
+{
+  text-decoration: none;
+  color: #232323;
+  transition: color 0.3s ease;
+}
+
+#menuToggle a:hover
+{
+  color: tomato;
+}
+
+#menuToggle span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+
+#menu li
+{
+  padding: 10px 0;
+  font-size: 22px;
+  opacity: 1;
 }

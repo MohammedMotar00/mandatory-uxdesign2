@@ -74,7 +74,7 @@ span {
 {
   position: absolute;
   top: -20px;
-  left: -11px;
+  left: -10px;
   opacity: 0;
   width: 170px;
   padding: 50px;
@@ -87,19 +87,6 @@ span {
   /* transform-origin: 0% 0%; */
   transform: translateX(-100%);
   transition: all 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
-}
-
-
-#menuToggle a
-{
-  text-decoration: none;
-  color: #232323;
-  transition: color 0.3s ease;
-}
-
-#menuToggle a:hover
-{
-  color: tomato;
 }
 
 #menuToggle span:first-child

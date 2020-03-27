@@ -70,7 +70,7 @@ span {
 }
 
 /* Make this absolute positioned at the top left of the screen */
-#menu
+.menu
 {
   position: absolute;
   top: -20px;
@@ -105,4 +105,41 @@ span {
   padding: 10px 0;
   font-size: 22px;
   opacity: 1;
+}
+
+/* Stats och About! */
+.clickedAbout {
+  height: 300px;
+  width: 300px;
+  border-radius: 10px;
+  border: 1px red solid;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 20;
+  display: block;
+}
+
+.clickedStats {
+  height: 300px;
+  width: 300px;
+  border-radius: 10px;
+  border: 1px red solid;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 20;
+  display: block;
+}
+
+.notClicked {
+  display: none;
+}
+
+ul li {
+  cursor: pointer;
 }

@@ -5,8 +5,8 @@ import HamburgerButton from './HamburgerButton';
 class Main extends Component {
   render() {
     return (
-      <div class="smartphone">
-        <div class="screen">
+      <div className="smartphone">
+        <div className="screen">
           <header>
             <HamburgerButton />
             <h1>Quiz Master</h1>

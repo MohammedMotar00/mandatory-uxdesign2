@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../css/phone.css';
 import HamburgerButton from './HamburgerButton';
+import Game from './Game';
 
 class Main extends Component {
   render() {
@@ -13,9 +14,8 @@ class Main extends Component {
           </header>
 
           <main>
-            <button className="CenterButton">
-                Start Quiz
-            </button>
+            {/* <button className="CenterButton">Start Quiz</button> */}
+            <Game />
           </main>
         </div>
       </div>

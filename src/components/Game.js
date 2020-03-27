@@ -9,24 +9,50 @@ class Game extends Component {
     super(props)
   
     this.state = {
-      gameStarted: false
+      gameStarted: false,
+      quizz: []
     }
   }
 
   componentDidMount() {
-    console.log('hej');
-
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
-    .then(res => console.log(res))
+    .then(x => {
+      x.data.results.map(q => {
+        console.log(q);
+
+        const newQuestion = {
+          question: q.question
+        };
+
+        const answerChoises = [ ...q.incorrect_answers ];
+
+        newQuestion.answer = Math.floor(Math.random() * 3) + 1;
+
+        answerChoises.splice(
+          newQuestion.answer -1,
+          0,
+          q.correct_answer
+        );
+
+        answerChoises.forEach((choice, index) => {
+          newQuestion['choice' + (index + 1)] = choice;
+        })
+
+        let myQuizzArr = this.state.quizz;
+        myQuizzArr.push(newQuestion);
+
+        this.setState({ quizz: myQuizzArr });
+      })
+    })
   }
 
   startGame = () => {
-    console.log('start');
+    // console.log('start');
     this.setState({ gameStarted: true });
   }
 
   render() {
-    const { gameStarted } = this.state;
+    const { gameStarted, quizz } = this.state;
 
     let hideBtn = '';
     if (gameStarted) {
@@ -37,7 +63,20 @@ class Game extends Component {
 
     return (
       <>
-        <button className={hideBtn} onClick={this.startGame}>Start Game</button>
+        {quizz.map(x => {
+          console.log(x);
+          return (
+            <>
+            <p>{x.question}</p>
+            <ul>
+              <li>{x.choice1}</li>
+              <li>{x.choice2}</li>
+              <li>{x.choice3}</li>
+              <li>{x.choice4}</li>
+            </ul>
+            </>
+          )
+        })}
       </>
     )
   }

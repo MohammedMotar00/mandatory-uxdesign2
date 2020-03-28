@@ -70,22 +70,22 @@ class Game extends Component {
             <p className="question">{x.question}</p>
             <ul className="answer-ul">
               <div className="answers-div">
-                <input type="radio" className="answers" name="question" value={x.choice1} />
+                <input type="radio" id={x.choice1} className="answers" name="question" value={x.choice1} />
                 <label htmlFor={x.choice1}>{x.choice1}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" className="answers" name="question" value={x.choice2} />
+                <input type="radio" id={x.choice2} className="answers" name="question" value={x.choice2} />
                 <label htmlFor={x.choice2}>{x.choice2}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" className="answers" name="question" value={x.choice3} />
+                <input type="radio" id={x.choice3} className="answers" name="question" value={x.choice3} />
                 <label htmlFor={x.choice3}>{x.choice3}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" className="answers" name="question" value={x.choice4} />
+                <input type="radio" id={x.choice4} className="answers" name="question" value={x.choice4} />
                 <label htmlFor={x.choice4}>{x.choice4}</label>
               </div>
             </ul>

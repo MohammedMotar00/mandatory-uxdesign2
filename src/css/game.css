@@ -31,3 +31,10 @@ label {
   background-color: rgba(106, 81, 122, 0.712);
   transition: all .2s linear;
 }
+
+.doneBtn-notActive {
+  opacity: 0;
+}
+
+.doneBtn-active {
+}

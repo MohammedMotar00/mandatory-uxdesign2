@@ -10,15 +10,55 @@ class Game extends Component {
   
     this.state = {
       gameStarted: false,
-      quizz: []
+      quizz: [],
+      doneBtnTxt: '',
+      doneBtnClass: 'doneBtn-notActive'
     }
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   axios('https://opentdb.com/api.php?amount=10&type=multiple')
+  //   .then(x => {
+  //     x.data.results.map(q => {
+  //       // console.log(q);
+
+  //       const newQuestion = {
+  //         question: q.question
+  //       };
+
+  //       const answerChoises = [ ...q.incorrect_answers ];
+  //       // console.log(answerChoises);
+
+  //       newQuestion.answer = Math.floor(Math.random() * 3) + 1;
+  //       // console.log(newQuestion);
+
+  //       answerChoises.splice(
+  //         newQuestion.answer -1,
+  //         0,
+  //         q.correct_answer
+  //       );
+
+  //       answerChoises.forEach((choice, index) => {
+  //         newQuestion['choice' + (index + 1)] = choice;
+  //       });
+
+  //       // console.log(answerChoises);
+
+  //       let myQuizzArr = this.state.quizz;
+  //       myQuizzArr.push(newQuestion);
+
+  //       this.setState({ quizz: myQuizzArr });
+  //     })
+  //   })
+  // }
+
+  startGame = () => {
+    this.setState({ gameStarted: true });
+
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
     .then(x => {
       x.data.results.map(q => {
-        console.log(q);
+        // console.log(q.correct_answer);
 
         const newQuestion = {
           question: q.question
@@ -44,15 +84,35 @@ class Game extends Component {
         this.setState({ quizz: myQuizzArr });
       })
     })
+
+    this.setState({ doneBtnTxt: 'Done', doneBtnClass: 'doneBtn-active' });
   }
 
-  startGame = () => {
-    // console.log('start');
-    this.setState({ gameStarted: true });
+  doneBtn = (e) => {
+    // console.log(e.target.value);
+  }
+
+  checkAnswers = (obj, x) => {
+    // let a = Object.keys(obj);
+    // console.log(a);
+    console.log(obj);
+
+    for (let [key, value] of Object.entries(obj)) {
+      // console.log(`${key}: ${value}`)
+      if (key === 'choice' + obj.answer) {
+        console.log('thats true');
+      } else {
+        console.log('thats not true');
+      }
+    }
+
+    // for (let i = 1; i <= 4; i++) {
+      
+    // }
   }
 
   render() {
-    const { gameStarted, quizz } = this.state;
+    const { gameStarted, quizz, doneBtnTxt, doneBtnClass } = this.state;
 
     let hideBtn = '';
     if (gameStarted) {
@@ -63,14 +123,16 @@ class Game extends Component {
 
     return (
       <>
+      <button className={hideBtn} onClick={this.startGame}>Start Game</button>
         {quizz.map(x => {
-          console.log(x);
+          // console.log(x);
           return (
-            <form>
+            <>
+            {/* <form> */}
             <p className="question">{x.question}</p>
             <ul className="answer-ul">
               <div className="answers-div">
-                <input type="radio" id={x.choice1} className="answers" name="question" value={x.choice1} />
+                <input type="radio" id={x.choice1} className="answers" name="question" value={x.choice1} onClick={() => this.checkAnswers(x, x.choice1)} />
                 <label htmlFor={x.choice1}>{x.choice1}</label>
               </div>
 
@@ -89,7 +151,9 @@ class Game extends Component {
                 <label htmlFor={x.choice4}>{x.choice4}</label>
               </div>
             </ul>
-            </form>
+            {/* </form> */}
+            {/* <button className={doneBtnClass} onClick={() => this.doneBtn(x)}>{doneBtnTxt}</button> */}
+            </>
           )
         })}
       </>

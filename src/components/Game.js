@@ -36,7 +36,7 @@ class Game extends Component {
 
         answerChoises.forEach((choice, index) => {
           newQuestion['choice' + (index + 1)] = choice;
-        })
+        });
 
         let myQuizzArr = this.state.quizz;
         myQuizzArr.push(newQuestion);
@@ -67,13 +67,22 @@ class Game extends Component {
           console.log(x);
           return (
             <>
+            <form>
             <p>{x.question}</p>
-            <ul>
-              <li>{x.choice1}</li>
-              <li>{x.choice2}</li>
-              <li>{x.choice3}</li>
-              <li>{x.choice4}</li>
+            <ul className="answer-ul">
+                <input type="radio" className="answers" name="question" value={x.choice1} />
+                <label htmlFor={x.choice1}>{x.choice1}</label>
+              <br/>
+                <input type="radio" className="answers" name="question" value={x.choice2} />
+                <label htmlFor={x.choice2}>{x.choice2}</label>
+              <br/>
+                <input type="radio" className="answers" name="question" value={x.choice3} />
+                <label htmlFor={x.choice3}>{x.choice3}</label>
+              <br/>
+                <input type="radio" className="answers" name="question" value={x.choice4} />
+                <label htmlFor={x.choice4}>{x.choice4}</label>
             </ul>
+            </form>
             </>
           )
         })}

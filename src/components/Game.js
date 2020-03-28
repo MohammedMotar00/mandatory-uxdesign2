@@ -66,24 +66,30 @@ class Game extends Component {
         {quizz.map(x => {
           console.log(x);
           return (
-            <>
             <form>
-            <p>{x.question}</p>
+            <p className="question">{x.question}</p>
             <ul className="answer-ul">
+              <div className="answers-div">
                 <input type="radio" className="answers" name="question" value={x.choice1} />
                 <label htmlFor={x.choice1}>{x.choice1}</label>
-              <br/>
+              </div>
+
+              <div className="answers-div">
                 <input type="radio" className="answers" name="question" value={x.choice2} />
                 <label htmlFor={x.choice2}>{x.choice2}</label>
-              <br/>
+              </div>
+
+              <div className="answers-div">
                 <input type="radio" className="answers" name="question" value={x.choice3} />
                 <label htmlFor={x.choice3}>{x.choice3}</label>
-              <br/>
+              </div>
+
+              <div className="answers-div">
                 <input type="radio" className="answers" name="question" value={x.choice4} />
                 <label htmlFor={x.choice4}>{x.choice4}</label>
+              </div>
             </ul>
             </form>
-            </>
           )
         })}
       </>

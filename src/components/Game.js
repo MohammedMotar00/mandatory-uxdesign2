@@ -16,21 +16,60 @@ class Game extends Component {
     }
   }
 
-  // componentDidMount() {
+  componentDidMount() {
+    axios('https://opentdb.com/api.php?amount=10&type=multiple')
+    .then(x => {
+      x.data.results.map(q => {
+        // console.log(q);
+
+        const newQuestion = {
+          question: q.question
+        };
+
+        const answerChoises = [ ...q.incorrect_answers ];
+        // console.log(answerChoises);
+
+        // newQuestion.answer = Math.floor(Math.random() * 3) + 1;
+        newQuestion.answer = q.correct_answer;
+        // console.log(newQuestion);
+
+        answerChoises.splice(
+          newQuestion.answer -1,
+          0,
+          q.correct_answer
+        );
+        // console.log(answerChoises);
+
+        answerChoises.forEach((choice, index) => {
+          newQuestion['choice' + (index + 1)] = choice;
+        });
+
+        // console.log(answerChoises);
+        // console.log(newQuestion);
+
+        let myQuizzArr = this.state.quizz;
+        myQuizzArr.push(newQuestion);
+
+        this.setState({ quizz: myQuizzArr });
+      })
+    })
+  }
+
+  // startGame = () => {
+  //   this.setState({ gameStarted: true });
+
   //   axios('https://opentdb.com/api.php?amount=10&type=multiple')
   //   .then(x => {
   //     x.data.results.map(q => {
-  //       // console.log(q);
+  //       // console.log(q.correct_answer);
 
   //       const newQuestion = {
   //         question: q.question
   //       };
 
   //       const answerChoises = [ ...q.incorrect_answers ];
-  //       // console.log(answerChoises);
 
   //       newQuestion.answer = Math.floor(Math.random() * 3) + 1;
-  //       // console.log(newQuestion);
 
   //       answerChoises.splice(
   //         newQuestion.answer -1,
@@ -42,62 +81,45 @@ class Game extends Component {
   //         newQuestion['choice' + (index + 1)] = choice;
   //       });
 
-  //       // console.log(answerChoises);
-
   //       let myQuizzArr = this.state.quizz;
   //       myQuizzArr.push(newQuestion);
 
   //       this.setState({ quizz: myQuizzArr });
   //     })
   //   })
+
+  //   this.setState({ doneBtnTxt: 'Done', doneBtnClass: 'doneBtn-active' });
   // }
-
-  startGame = () => {
-    this.setState({ gameStarted: true });
-
-    axios('https://opentdb.com/api.php?amount=10&type=multiple')
-    .then(x => {
-      x.data.results.map(q => {
-        // console.log(q.correct_answer);
-
-        const newQuestion = {
-          question: q.question
-        };
-
-        const answerChoises = [ ...q.incorrect_answers ];
-
-        newQuestion.answer = Math.floor(Math.random() * 3) + 1;
-
-        answerChoises.splice(
-          newQuestion.answer -1,
-          0,
-          q.correct_answer
-        );
-
-        answerChoises.forEach((choice, index) => {
-          newQuestion['choice' + (index + 1)] = choice;
-        });
-
-        let myQuizzArr = this.state.quizz;
-        myQuizzArr.push(newQuestion);
-
-        this.setState({ quizz: myQuizzArr });
-      })
-    })
-
-    this.setState({ doneBtnTxt: 'Done', doneBtnClass: 'doneBtn-active' });
-  }
 
   doneBtn = (e) => {
     // console.log(e.target.value);
   }
 
-  checkAnswers = (obj, x) => {
-    // let a = Object.keys(obj);
-    // console.log(a);
+  checkAnswers = (obj, myChoice) => {
 
-    let b = 'choice' + obj.answer in obj;
-    console.log(b);
+    // console.log(obj.answer);
+    // console.log(myChoice);
+
+    let answer
+
+    if (obj.answer === myChoice) {
+      console.log('rätt svar');
+      answer = myChoice;
+    } else {
+      console.log('fel svar!');
+      answer = null;
+    }
+
+    console.log(answer);
+
+
+    // obj.hasOwnProperty("choice" + obj.answer)
+    // console.log(obj.hasOwnProperty("choice" + obj.answer));
+
+    // let b = 'choice' + obj.answer in obj;
+    // console.log(b);
+
+    // console.log('choice' + obj.answer.value);
 
     // console.log(obj.choice1);
 

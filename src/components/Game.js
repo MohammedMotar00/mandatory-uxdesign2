@@ -16,7 +16,48 @@ class Game extends Component {
     }
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   axios('https://opentdb.com/api.php?amount=10&type=multiple')
+  //   .then(x => {
+  //     x.data.results.map(q => {
+  //       // console.log(q);
+
+  //       const newQuestion = {
+  //         question: q.question
+  //       };
+
+  //       const answerChoises = [ ...q.incorrect_answers ];
+  //       // console.log(answerChoises);
+
+  //       // newQuestion.answer = Math.floor(Math.random() * 3) + 1;
+  //       newQuestion.answer = q.correct_answer;
+  //       // console.log(newQuestion);
+
+  //       answerChoises.splice(
+  //         newQuestion.answer -1,
+  //         0,
+  //         q.correct_answer
+  //       );
+  //       // console.log(answerChoises);
+
+  //       answerChoises.forEach((choice, index) => {
+  //         newQuestion['choice' + (index + 1)] = choice;
+  //       });
+
+  //       // console.log(answerChoises);
+  //       // console.log(newQuestion);
+
+  //       let myQuizzArr = this.state.quizz;
+  //       myQuizzArr.push(newQuestion);
+
+  //       this.setState({ quizz: myQuizzArr });
+  //     })
+  //   })
+  // }
+
+  startGame = () => {
+    this.setState({ gameStarted: true });
+
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
     .then(x => {
       x.data.results.map(q => {
@@ -29,8 +70,8 @@ class Game extends Component {
         const answerChoises = [ ...q.incorrect_answers ];
         // console.log(answerChoises);
 
-        // newQuestion.answer = Math.floor(Math.random() * 3) + 1;
-        newQuestion.answer = q.correct_answer;
+        newQuestion.answer = Math.floor(Math.random() * 3) + 1;
+        newQuestion.realAnswer = q.correct_answer;
         // console.log(newQuestion);
 
         answerChoises.splice(
@@ -55,54 +96,15 @@ class Game extends Component {
     })
   }
 
-  // startGame = () => {
-  //   this.setState({ gameStarted: true });
-
-  //   axios('https://opentdb.com/api.php?amount=10&type=multiple')
-  //   .then(x => {
-  //     x.data.results.map(q => {
-  //       // console.log(q.correct_answer);
-
-  //       const newQuestion = {
-  //         question: q.question
-  //       };
-
-  //       const answerChoises = [ ...q.incorrect_answers ];
-
-  //       newQuestion.answer = Math.floor(Math.random() * 3) + 1;
-
-  //       answerChoises.splice(
-  //         newQuestion.answer -1,
-  //         0,
-  //         q.correct_answer
-  //       );
-
-  //       answerChoises.forEach((choice, index) => {
-  //         newQuestion['choice' + (index + 1)] = choice;
-  //       });
-
-  //       let myQuizzArr = this.state.quizz;
-  //       myQuizzArr.push(newQuestion);
-
-  //       this.setState({ quizz: myQuizzArr });
-  //     })
-  //   })
-
-  //   this.setState({ doneBtnTxt: 'Done', doneBtnClass: 'doneBtn-active' });
-  // }
-
   doneBtn = (e) => {
     // console.log(e.target.value);
   }
 
   checkAnswers = (obj, myChoice) => {
-
-    // console.log(obj.answer);
-    // console.log(myChoice);
-
+    console.log(obj);
     let answer
 
-    if (obj.answer === myChoice) {
+    if (obj.realAnswer === myChoice) {
       console.log('rätt svar');
       answer = myChoice;
     } else {
@@ -110,40 +112,7 @@ class Game extends Component {
       answer = null;
     }
 
-    console.log(answer);
-
-
-    // obj.hasOwnProperty("choice" + obj.answer)
-    // console.log(obj.hasOwnProperty("choice" + obj.answer));
-
-    // let b = 'choice' + obj.answer in obj;
-    // console.log(b);
-
-    // console.log('choice' + obj.answer.value);
-
-    // console.log(obj.choice1);
-
-    // console.log('choice' + obj.answer);
-
-    // if ('choice' + obj.answer === obj.choice1) console.log('true answer');
-
-    // obj.find(x => console.log(x))
-
-    // for (let [key, value] of Object.entries(obj)) {
-      // console.log(`${key}: ${value}`);
-      // let b = ''
-      // console.log('choice' + obj.answer);
-      // if (key === 'choice' + obj.answer) console.log('thats true');
-    // }
-
-    // console.log(x);
-    // console.log('rätta svaret!' ,'choice' + obj.answer);
-
-    // if ('choice' + obj.answer === x) {
-    //   console.log('rätt svar');
-    // } else {
-    //   console.log('fel svar');
-    // }
+    // console.log(answer);
   }
 
   render() {

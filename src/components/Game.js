@@ -102,16 +102,21 @@ class Game extends Component {
 
   checkAnswers = (obj, myChoice) => {
     console.log(obj);
+
+    let rightAnswer = 0;
+
     let answer
 
     if (obj.realAnswer === myChoice) {
       console.log('rätt svar');
+      rightAnswer++;
       answer = myChoice;
     } else {
       console.log('fel svar!');
       answer = null;
     }
 
+    console.log(rightAnswer);
     // console.log(answer);
   }
 

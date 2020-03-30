@@ -59,8 +59,8 @@ class Game extends Component {
     this.setState({ gameStarted: true });
 
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
-    .then(x => {
-      x.data.results.map(q => {
+    .then(res => {
+      res.data.results.map(q => {
         // console.log(q);
 
         const newQuestion = {
@@ -73,6 +73,7 @@ class Game extends Component {
         newQuestion.answer = Math.floor(Math.random() * 3) + 1;
         newQuestion.realAnswer = q.correct_answer;
         // console.log(newQuestion);
+
 
         answerChoises.splice(
           newQuestion.answer -1,
@@ -100,14 +101,15 @@ class Game extends Component {
     // console.log(e.target.value);
   }
 
-  checkAnswers = (obj, myChoice) => {
-    console.log(obj);
+  checkAnswers = (svar, myChoice) => {
+    console.log(svar);
+    console.log(myChoice);
 
     let rightAnswer = 0;
 
     let answer
 
-    if (obj.realAnswer === myChoice) {
+    if (svar === myChoice) {
       console.log('rätt svar');
       rightAnswer++;
       answer = myChoice;
@@ -135,29 +137,48 @@ class Game extends Component {
       <button className={hideBtn} onClick={this.startGame}>Start Game</button>
         {quizz.map(x => {
           // console.log(x);
+          const entities = {
+            '&#039;': "'",
+            '&quot;': '"',
+            '&ldquo;': '“',
+            '&rdquo;': '”',
+            "&ntilde;": "ñ",
+            "&eacute;": "é",
+            "&amp;": "&" ,
+            "&uuml;": "ü"
+          }
+
+          let svar = x.realAnswer.replace(/&#?\w+;/g, match => entities[match]);
+
+          let questions = x.question.replace(/&#?\w+;/g, match => entities[match]);
+          let choice1 = x.choice1.replace(/&#?\w+;/g, match => entities[match]);
+          let choice2 = x.choice2.replace(/&#?\w+;/g, match => entities[match]);
+          let choice3 = x.choice3.replace(/&#?\w+;/g, match => entities[match]);
+          let choice4 = x.choice4.replace(/&#?\w+;/g, match => entities[match]);
+
           return (
             <>
             {/* <form> */}
-            <p className="question">{x.question}</p>
+            <p className="question">{questions}</p>
             <ul className="answer-ul">
               <div className="answers-div">
-                <input type="radio" id={x.choice1} className="answers" name="question" value={x.choice1} onClick={() => this.checkAnswers(x, x.choice1)} />
-                <label htmlFor={x.choice1}>{x.choice1}</label>
+                <input type="radio" id={choice1} className="answers" name="question" value={choice1} onClick={() => this.checkAnswers(svar, x.choice1)} />
+                <label htmlFor={choice1}>{choice1}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={x.choice2} className="answers" name="question" value={x.choice2} onClick={() => this.checkAnswers(x, x.choice2)} />
-                <label htmlFor={x.choice2}>{x.choice2}</label>
+                <input type="radio" id={choice2} className="answers" name="question" value={choice2} onClick={() => this.checkAnswers(svar, choice2)} />
+                <label htmlFor={choice2}>{choice2}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={x.choice3} className="answers" name="question" value={x.choice3} onClick={() => this.checkAnswers(x, x.choice3)} />
-                <label htmlFor={x.choice3}>{x.choice3}</label>
+                <input type="radio" id={choice3} className="answers" name="question" value={choice3} onClick={() => this.checkAnswers(svar, choice3)} />
+                <label htmlFor={choice3}>{choice3}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={x.choice4} className="answers" name="question" value={x.choice4} onClick={() => this.checkAnswers(x, x.choice4)} />
-                <label htmlFor={x.choice4}>{x.choice4}</label>
+                <input type="radio" id={choice4} className="answers" name="question" value={choice4} onClick={() => this.checkAnswers(svar, choice4)} />
+                <label htmlFor={choice4}>{choice4}</label>
               </div>
             </ul>
             {/* </form> */}

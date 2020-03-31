@@ -69,7 +69,7 @@ class HamburgerButton extends Component {
           <span></span>
           <span></span>
           <ul className="menu">
-            <li onClick={this.unCheck}>Close menu</li>
+            <li onClick={this.unCheck}>Close </li>
             <li onClick={this.clickedOnStats}>Stats</li>
             <li onClick={this.clickedOnAbout}>About</li>
           </ul>

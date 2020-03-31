@@ -2,6 +2,10 @@
   display: none;
 }
 
+.modalBtn {
+  display: none;
+}
+
 .question {
   font-size: 20px;
 }

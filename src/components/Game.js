@@ -16,9 +16,6 @@ class Game extends Component {
       gameStarted: false,
       quizz: [],
 
-      doneBtnTxt: '',
-      doneBtnClass: 'doneBtn-notActive',
-
       answered: [],
       rightAnswers: [],
       correctAnswers: '',
@@ -29,6 +26,12 @@ class Game extends Component {
 
   startGame = () => {
     this.setState({ gameStarted: true });
+    this.setState({ show: false });
+
+    this.setState({ quizz: [] });
+    this.setState({ answered: [] });
+    this.setState({ rightAnswers: [] });
+    this.setState({ correctAnswers: '' });
 
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
     .then(res => {
@@ -70,6 +73,15 @@ class Game extends Component {
 
     this.setState({ doneBtnTxt: 'Done' });
     this.setState({ doneBtnClass: 'doneBtn-active' });
+  }
+
+  closeGame = () => {
+    this.setState({ gameStarted: false });
+    this.setState({ show: false });
+    this.setState({ quizz: [] });
+    this.setState({ answered: [] });
+    this.setState({ rightAnswers: [] });
+    this.setState({ correctAnswers: '' });
   }
 
   doneBtn = (e) => {
@@ -129,27 +141,9 @@ class Game extends Component {
     this.setState({ correctAnswers: answers });
   }
 
-  // clickMe = () => {
-  //   this.setState({ openDialog: true });
-
-  //   let allAnswers = this.state.answered;
-  //   let allrightAnswers = this.state.rightAnswers;
-
-  //   let answers = 0;
-
-  //   for (let i = 0; i < allAnswers.length; i++) {
-  //     // console.log(allAnswers[i]);
-  //     // console.log(i);
-  //     if (allrightAnswers[i] === allAnswers[i]) {
-  //       console.log('right answer');
-  //       answers++
-  //     } else {
-  //       console.log('false answer');
-  //     }
-  //   }
-
-  //   console.log(answers);
-  // }
+  componentDidUpdate() {
+    console.log(document.getElementById('root').querySelector('main').querySelector('#reset'))
+  }
 
   onChange = (svar, myChoice) => {
 
@@ -167,10 +161,14 @@ class Game extends Component {
     const { gameStarted, quizz, doneBtnTxt, doneBtnClass, correctAnswers } = this.state;
 
     let hideBtn = '';
+    let showModalBox = '';
+
     if (gameStarted) {
-      hideBtn = 'hide-start-btn'
+      hideBtn = 'hide-start-btn';
+      showModalBox = '';
     } else {
-      hideBtn = ''
+      hideBtn = '';
+      showModalBox = 'modalBtn';
     }
 
     return (
@@ -198,7 +196,7 @@ class Game extends Component {
           let choice4 = x.choice4.replace(/&#?\w+;/g, match => entities[match]);
 
           return (
-            <>
+            <div id="reset">
             <form onSubmit={() => this.checkAnswers(x)}>
             <p className="question">{questions}</p>
             <ul className="answer-ul">
@@ -223,23 +221,28 @@ class Game extends Component {
               </div>
             </ul>
             </form>
-            </>
+            </div>
           )
         })}
         {/* <button onClick={this.clickMe}>klick</button> */}
-        <Button onClick={this.handleModal}>Open Modal</Button>
-        <Modal show={this.state.show} onHide={this.handleModal} backdrop="static">
-          <Modal.Header closeButton>Modal Head</Modal.Header>
-          <Modal.Body>
-            <h1>Your score is:</h1>
-            <h3>{correctAnswers} / 10</h3>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={this.handleModal}>
-              close modal
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <div className={showModalBox}>
+          <Button onClick={this.handleModal}>Open Modal</Button>
+          <Modal show={this.state.show} onHide={this.handleModal} backdrop="static">
+            <Modal.Header closeButton>Modal Head</Modal.Header>
+            <Modal.Body>
+              <h1>Your score is:</h1>
+              <h3>{correctAnswers} / 10</h3>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={this.startGame}>
+                Restart Game
+              </Button>
+              <Button onClick={this.closeGame}>
+                Return to Main
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </>
     )
   }

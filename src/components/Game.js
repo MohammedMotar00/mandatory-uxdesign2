@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import '../css/game.css';
 
+import ModalDialogBtn from './ModalDialogBtn';
+
 // let answers
 
 class Game extends Component {
@@ -237,7 +239,8 @@ class Game extends Component {
             </>
           )
         })}
-        <button onClick={this.clickMe}>klick</button>
+        {/* <button onClick={this.clickMe}>klick</button> */}
+        <ModalDialogBtn />
       </>
     )
   }

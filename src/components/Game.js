@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import '../css/game.css';
 
-import ModalDialogBtn from './ModalDialogBtn';
+import { Button, Modal } from 'react-bootstrap';
 
 // let answers
 
@@ -20,48 +20,12 @@ class Game extends Component {
       doneBtnClass: 'doneBtn-notActive',
 
       answered: [],
-      rightAnswers: []
+      rightAnswers: [],
+      correctAnswers: '',
+
+      show: false
     }
   }
-
-  // componentDidMount() {
-  //   axios('https://opentdb.com/api.php?amount=10&type=multiple')
-  //   .then(x => {
-  //     x.data.results.map(q => {
-  //       // console.log(q);
-
-  //       const newQuestion = {
-  //         question: q.question
-  //       };
-
-  //       const answerChoises = [ ...q.incorrect_answers ];
-  //       // console.log(answerChoises);
-
-  //       // newQuestion.answer = Math.floor(Math.random() * 3) + 1;
-  //       newQuestion.answer = q.correct_answer;
-  //       // console.log(newQuestion);
-
-  //       answerChoises.splice(
-  //         newQuestion.answer -1,
-  //         0,
-  //         q.correct_answer
-  //       );
-  //       // console.log(answerChoises);
-
-  //       answerChoises.forEach((choice, index) => {
-  //         newQuestion['choice' + (index + 1)] = choice;
-  //       });
-
-  //       // console.log(answerChoises);
-  //       // console.log(newQuestion);
-
-  //       let myQuizzArr = this.state.quizz;
-  //       myQuizzArr.push(newQuestion);
-
-  //       this.setState({ quizz: myQuizzArr });
-  //     })
-  //   })
-  // }
 
   startGame = () => {
     this.setState({ gameStarted: true });
@@ -140,7 +104,11 @@ class Game extends Component {
     // console.log(answer);
   }
 
-  clickMe = () => {
+  handleModal = () => {
+    this.setState({ show: !this.state.show });
+
+    this.setState({ openDialog: true });
+
     let allAnswers = this.state.answered;
     let allrightAnswers = this.state.rightAnswers;
 
@@ -158,7 +126,30 @@ class Game extends Component {
     }
 
     console.log(answers);
+    this.setState({ correctAnswers: answers });
   }
+
+  // clickMe = () => {
+  //   this.setState({ openDialog: true });
+
+  //   let allAnswers = this.state.answered;
+  //   let allrightAnswers = this.state.rightAnswers;
+
+  //   let answers = 0;
+
+  //   for (let i = 0; i < allAnswers.length; i++) {
+  //     // console.log(allAnswers[i]);
+  //     // console.log(i);
+  //     if (allrightAnswers[i] === allAnswers[i]) {
+  //       console.log('right answer');
+  //       answers++
+  //     } else {
+  //       console.log('false answer');
+  //     }
+  //   }
+
+  //   console.log(answers);
+  // }
 
   onChange = (svar, myChoice) => {
 
@@ -171,13 +162,9 @@ class Game extends Component {
     this.setState({ rightAnswers: myRightAnswers });
   }
 
-  onClick = (e) => {
-    console.log(e.target['input="type"']);
-  }
-
 
   render() {
-    const { gameStarted, quizz, doneBtnTxt, doneBtnClass } = this.state;
+    const { gameStarted, quizz, doneBtnTxt, doneBtnClass, correctAnswers } = this.state;
 
     let hideBtn = '';
     if (gameStarted) {
@@ -214,7 +201,7 @@ class Game extends Component {
             <>
             <form onSubmit={() => this.checkAnswers(x)}>
             <p className="question">{questions}</p>
-            <ul onClick={this.onClick.bind(this)} className="answer-ul">
+            <ul className="answer-ul">
               <div className="answers-div">
                 <input type="radio" id={choice1} className="answers" name="question" value={choice1} onChange={() => this.onChange(svar, choice1)} />
                 <label htmlFor={choice1}>{choice1}</label>
@@ -240,7 +227,19 @@ class Game extends Component {
           )
         })}
         {/* <button onClick={this.clickMe}>klick</button> */}
-        <ModalDialogBtn />
+        <Button onClick={this.handleModal}>Open Modal</Button>
+        <Modal show={this.state.show} onHide={this.handleModal} backdrop="static">
+          <Modal.Header closeButton>Modal Head</Modal.Header>
+          <Modal.Body>
+            <h1>Your score is:</h1>
+            <h3>{correctAnswers} / 10</h3>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.handleModal}>
+              close modal
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </>
     )
   }

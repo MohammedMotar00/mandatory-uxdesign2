@@ -37,4 +37,6 @@ label {
 }
 
 .doneBtn-active {
+  opacity: 1;
+  position: absolute;
 }

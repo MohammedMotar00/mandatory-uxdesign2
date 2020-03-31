@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import '../css/game.css';
 
+// let answers
+
 class Game extends Component {
   constructor(props) {
     super(props)
@@ -11,8 +13,12 @@ class Game extends Component {
     this.state = {
       gameStarted: false,
       quizz: [],
+
       doneBtnTxt: '',
-      doneBtnClass: 'doneBtn-notActive'
+      doneBtnClass: 'doneBtn-notActive',
+
+      answered: [],
+      rightAnswers: []
     }
   }
 
@@ -95,32 +101,78 @@ class Game extends Component {
         this.setState({ quizz: myQuizzArr });
       })
     })
+
+    this.setState({ doneBtnTxt: 'Done' });
+    this.setState({ doneBtnClass: 'doneBtn-active' });
   }
 
   doneBtn = (e) => {
-    // console.log(e.target.value);
+    // console.log(e);
   }
 
-  checkAnswers = (svar, myChoice) => {
-    console.log(svar);
-    console.log(myChoice);
+  checkAnswers = (e, x) => {
 
+    console.log(e);
+    console.log(x);
+
+    let correct
+    let inCorrect
     let rightAnswer = 0;
 
+    let totalQuestion = 10;
+
     let answer
+    let falseAnswer
 
-    if (svar === myChoice) {
-      console.log('rätt svar');
-      rightAnswer++;
-      answer = myChoice;
-    } else {
-      console.log('fel svar!');
-      answer = null;
-    }
+    // if (svar === myChoice) {
+    //   console.log('rätt svar');
+    //   rightAnswer += 1;
+    //   answer = myChoice;
+    // } else {
+    //   console.log('fel svar!');
+    //   falseAnswer = null;
+    //   totalQuestion--;
+    // }
 
-    console.log(rightAnswer);
+    // console.log(rightAnswer);
     // console.log(answer);
   }
+
+  clickMe = () => {
+    let allAnswers = this.state.answered;
+    let allrightAnswers = this.state.rightAnswers;
+
+    let answers = 0;
+
+    for (let i = 0; i < allAnswers.length; i++) {
+      // console.log(allAnswers[i]);
+      // console.log(i);
+      if (allrightAnswers[i] === allAnswers[i]) {
+        console.log('right answer');
+        answers++
+      } else {
+        console.log('false answer');
+      }
+    }
+
+    console.log(answers);
+  }
+
+  onChange = (svar, myChoice) => {
+
+    let myAnswers = this.state.answered;
+    myAnswers.push(myChoice);
+    this.setState({ answered: myAnswers });
+
+    let myRightAnswers = this.state.rightAnswers;
+    myRightAnswers.push(svar);
+    this.setState({ rightAnswers: myRightAnswers });
+  }
+
+  onClick = (e) => {
+    console.log(e.target['input="type"']);
+  }
+
 
   render() {
     const { gameStarted, quizz, doneBtnTxt, doneBtnClass } = this.state;
@@ -158,34 +210,34 @@ class Game extends Component {
 
           return (
             <>
-            {/* <form> */}
+            <form onSubmit={() => this.checkAnswers(x)}>
             <p className="question">{questions}</p>
-            <ul className="answer-ul">
+            <ul onClick={this.onClick.bind(this)} className="answer-ul">
               <div className="answers-div">
-                <input type="radio" id={choice1} className="answers" name="question" value={choice1} onClick={() => this.checkAnswers(svar, x.choice1)} />
+                <input type="radio" id={choice1} className="answers" name="question" value={choice1} onChange={() => this.onChange(svar, choice1)} />
                 <label htmlFor={choice1}>{choice1}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={choice2} className="answers" name="question" value={choice2} onClick={() => this.checkAnswers(svar, choice2)} />
+                <input type="radio" id={choice2} className="answers" name="question" value={choice2} onChange={() => this.onChange(svar, choice2)} />
                 <label htmlFor={choice2}>{choice2}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={choice3} className="answers" name="question" value={choice3} onClick={() => this.checkAnswers(svar, choice3)} />
+                <input type="radio" id={choice3} className="answers" name="question" value={choice3} onChange={() => this.onChange(svar, choice3)} />
                 <label htmlFor={choice3}>{choice3}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={choice4} className="answers" name="question" value={choice4} onClick={() => this.checkAnswers(svar, choice4)} />
+                <input type="radio" id={choice4} className="answers" name="question" value={choice4} onChange={() => this.onChange(svar, choice4)} />
                 <label htmlFor={choice4}>{choice4}</label>
               </div>
             </ul>
-            {/* </form> */}
-            {/* <button className={doneBtnClass} onClick={() => this.doneBtn(x)}>{doneBtnTxt}</button> */}
+            </form>
             </>
           )
         })}
+        <button onClick={this.clickMe}>klick</button>
       </>
     )
   }

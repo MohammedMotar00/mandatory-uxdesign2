@@ -70,9 +70,6 @@ class Game extends Component {
         this.setState({ quizz: myQuizzArr });
       })
     })
-
-    this.setState({ doneBtnTxt: 'Done' });
-    this.setState({ doneBtnClass: 'doneBtn-active' });
   }
 
   closeGame = () => {
@@ -82,38 +79,6 @@ class Game extends Component {
     this.setState({ answered: [] });
     this.setState({ rightAnswers: [] });
     this.setState({ correctAnswers: '' });
-  }
-
-  doneBtn = (e) => {
-    // console.log(e);
-  }
-
-  checkAnswers = (e, x) => {
-
-    console.log(e);
-    console.log(x);
-
-    let correct
-    let inCorrect
-    let rightAnswer = 0;
-
-    let totalQuestion = 10;
-
-    let answer
-    let falseAnswer
-
-    // if (svar === myChoice) {
-    //   console.log('rätt svar');
-    //   rightAnswer += 1;
-    //   answer = myChoice;
-    // } else {
-    //   console.log('fel svar!');
-    //   falseAnswer = null;
-    //   totalQuestion--;
-    // }
-
-    // console.log(rightAnswer);
-    // console.log(answer);
   }
 
   handleModal = () => {
@@ -141,10 +106,6 @@ class Game extends Component {
     this.setState({ correctAnswers: answers });
   }
 
-  componentDidUpdate() {
-    console.log(document.getElementById('root').querySelector('main').querySelector('#reset'))
-  }
-
   onChange = (svar, myChoice) => {
 
     let myAnswers = this.state.answered;
@@ -158,7 +119,7 @@ class Game extends Component {
 
 
   render() {
-    const { gameStarted, quizz, doneBtnTxt, doneBtnClass, correctAnswers } = this.state;
+    const { gameStarted, quizz, correctAnswers } = this.state;
 
     let hideBtn = '';
     let showModalBox = '';
@@ -196,8 +157,8 @@ class Game extends Component {
           let choice4 = x.choice4.replace(/&#?\w+;/g, match => entities[match]);
 
           return (
-            <div id="reset">
-            <form onSubmit={() => this.checkAnswers(x)}>
+            <>
+            <form>
             <p className="question">{questions}</p>
             <ul className="answer-ul">
               <div className="answers-div">
@@ -221,7 +182,7 @@ class Game extends Component {
               </div>
             </ul>
             </form>
-            </div>
+            </>
           )
         })}
         {/* <button onClick={this.clickMe}>klick</button> */}

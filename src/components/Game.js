@@ -6,7 +6,7 @@ import '../css/game.css';
 
 import { Button, Modal } from 'react-bootstrap';
 
-// let answers
+let playedGames = 0;
 
 class Game extends Component {
   constructor(props) {
@@ -19,6 +19,7 @@ class Game extends Component {
       answered: [],
       rightAnswers: [],
       correctAnswers: '',
+      updatedCorrectAnswers: '',
 
       show: false
     }
@@ -31,7 +32,27 @@ class Game extends Component {
     this.setState({ quizz: [] });
     this.setState({ answered: [] });
     this.setState({ rightAnswers: [] });
-    this.setState({ correctAnswers: '' });
+    // this.setState({ correctAnswers: '' });
+
+    playedGames++;
+
+    let gamesPlayed = JSON.parse(localStorage.getItem("gamesPlayed"));
+
+    if (gamesPlayed !== null) {
+      if (gamesPlayed === 0) {
+        localStorage.setItem("gamesPlayed", JSON.stringify(1));
+      }
+      else if (gamesPlayed >= 1) {
+        let playedTimes = JSON.parse(localStorage.getItem("gamesPlayed"));
+        let updatePlayedTimes = playedTimes += 1;
+        localStorage.setItem("gamesPlayed", JSON.stringify(updatePlayedTimes));
+      }
+    }
+    else {
+      localStorage.setItem("gamesPlayed", JSON.stringify(1));
+    }
+
+    // localStorage.setItem('gamesPlayed', JSON.stringify(playedGames));
 
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
     .then(res => {
@@ -48,7 +69,6 @@ class Game extends Component {
         newQuestion.answer = Math.floor(Math.random() * 3) + 1;
         newQuestion.realAnswer = q.correct_answer;
         // console.log(newQuestion);
-
 
         answerChoises.splice(
           newQuestion.answer -1,
@@ -78,7 +98,7 @@ class Game extends Component {
     this.setState({ quizz: [] });
     this.setState({ answered: [] });
     this.setState({ rightAnswers: [] });
-    this.setState({ correctAnswers: '' });
+    // this.setState({ correctAnswers: '' });
   }
 
   handleModal = () => {
@@ -102,8 +122,28 @@ class Game extends Component {
       }
     }
 
-    console.log(answers);
+    let highScore = JSON.parse(localStorage.getItem("highscore"));
+
+    if (highScore !== null) {
+      if (highScore === 0) {
+        localStorage.setItem("highscore", JSON.stringify(answers));
+      } else if (highScore >= 1) {
+        let updateScore = JSON.parse(localStorage.getItem("highscore"));
+        let updated = updateScore + answers;
+        localStorage.setItem("highscore", JSON.stringify(updated));
+      }
+    }
+    else {
+      localStorage.setItem("highscore", JSON.stringify(answers));
+    }
+
     this.setState({ correctAnswers: answers });
+  }
+
+  componentDidUpdate() {
+    let x = this.state.correctAnswers;
+    let y = this.state.correctAnswers + x;
+    console.log(y);
   }
 
   onChange = (svar, myChoice) => {

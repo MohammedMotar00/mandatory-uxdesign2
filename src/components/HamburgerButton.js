@@ -60,6 +60,11 @@ class HamburgerButton extends Component {
       showStats = 'notClicked';
     }
 
+    let gamesPlayed = JSON.parse(localStorage.getItem("gamesPlayed"));
+    let highScore = JSON.parse(localStorage.getItem("highscore")); // kanske ändrar senare variabeln i localStorage till correctScore!
+
+    let incorrectAnswers = gamesPlayed * 10 - highScore;
+
 
     return (
       <>
@@ -76,17 +81,17 @@ class HamburgerButton extends Component {
         </nav>
 
         <div className={showAbout}>
-            <button onClick={this.closeBtn}>X</button>
-            <p>My game, created 2020 and its the best!</p>
-          </div>
+          <button onClick={this.closeBtn}>X</button>
+          <p>My game, created 2020 and its the best!</p>
+        </div>
 
           <div className={showStats}>
             <button onClick={this.closeBtn}>X</button>
-            <p>Game played = 10</p>
+            <p>Game played = {gamesPlayed}</p>
             <br/>
-            <p>Correct answer = 40</p>
+            <p>Correct answer = {highScore}</p>
             <br/>
-            <p>Incorrect answer = 50</p>
+            <p>Incorrect answer = {incorrectAnswers}</p>
             <br/>
             <p>Correct presentage = 30%</p>
           </div>

@@ -52,8 +52,6 @@ class Game extends Component {
       localStorage.setItem("gamesPlayed", JSON.stringify(1));
     }
 
-    // localStorage.setItem('gamesPlayed', JSON.stringify(playedGames));
-
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
     .then(res => {
       res.data.results.map(q => {
@@ -140,14 +138,7 @@ class Game extends Component {
     this.setState({ correctAnswers: answers });
   }
 
-  componentDidUpdate() {
-    let x = this.state.correctAnswers;
-    let y = this.state.correctAnswers + x;
-    console.log(y);
-  }
-
   onChange = (svar, myChoice) => {
-
     let myAnswers = this.state.answered;
     myAnswers.push(myChoice);
     this.setState({ answered: myAnswers });
@@ -227,7 +218,7 @@ class Game extends Component {
         })}
         {/* <button onClick={this.clickMe}>klick</button> */}
         <div className={showModalBox}>
-          <Button onClick={this.handleModal}>Open Modal</Button>
+          <Button onClick={this.handleModal}>Finish game!</Button>
           <Modal show={this.state.show} onHide={this.handleModal} backdrop="static">
             <Modal.Header closeButton>Modal Head</Modal.Header>
             <Modal.Body>

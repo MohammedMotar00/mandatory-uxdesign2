@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 
 import '../css/hamburger-button.css';
 
+import { Button, Modal } from 'react-bootstrap'
+import About from './About';
+import Stats from './Stats';
+
 class HamburgerButton extends Component {
   constructor(props) {
     super(props)
@@ -10,7 +14,8 @@ class HamburgerButton extends Component {
       activeStats: false,
       activeAbout: false,
 
-      checked: false
+      checked: false,
+      show: false
     }
   }
 
@@ -43,6 +48,10 @@ class HamburgerButton extends Component {
     this.setState({ activeStats: false });
   }
 
+  handleModal = () => {
+    this.setState({ show: !this.state.show });
+  }
+
   render() {
     const { activeStats, activeAbout } = this.state;
 
@@ -60,41 +69,19 @@ class HamburgerButton extends Component {
       showStats = 'notClicked';
     }
 
-    let gamesPlayed = JSON.parse(localStorage.getItem("gamesPlayed"));
-    let highScore = JSON.parse(localStorage.getItem("highscore")); // kanske ändrar senare variabeln i localStorage till correctScore!
-
-    let incorrectAnswers = gamesPlayed * 10 - highScore;
-
-
     return (
       <>
         <nav role="navigation" id="menuToggle">
           <input type="checkbox" checked={this.state.checked} onChange={this.handleChange.bind(this)} />
-          <span></span>
+          <span onClick></span>
           <span></span>
           <span></span>
           <ul className="menu">
             <li onClick={this.unCheck}>Close </li>
-            <li onClick={this.clickedOnStats}>Stats</li>
-            <li onClick={this.clickedOnAbout}>About</li>
+            <li><Stats /></li>
+            <li><About /></li>
           </ul>
         </nav>
-
-        <div className={showAbout}>
-          <button onClick={this.closeBtn}>X</button>
-          <p>My game, created 2020 and its the best!</p>
-        </div>
-
-          <div className={showStats}>
-            <button onClick={this.closeBtn}>X</button>
-            <p>Game played = {gamesPlayed}</p>
-            <br/>
-            <p>Correct answer = {highScore}</p>
-            <br/>
-            <p>Incorrect answer = {incorrectAnswers}</p>
-            <br/>
-            <p>Correct presentage = 30%</p>
-          </div>
       </>
     )
   }

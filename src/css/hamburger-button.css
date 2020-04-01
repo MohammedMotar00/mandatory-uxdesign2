@@ -18,6 +18,10 @@ input {
   /* -webkit-touch-callout: none; */
 }
 
+input:focus {
+  opacity: .3;
+}
+
 span {
   transform: translate(2px, 2px);
 
@@ -65,8 +69,9 @@ span {
 #menuToggle input:checked ~ ul
 {
   transform: none;
-  display: block;
+  /* display: block; */
   opacity: .9;
+  visibility: visible;
 }
 
 /* Make this absolute positioned at the top left of the screen */
@@ -75,7 +80,8 @@ span {
   position: absolute;
   top: -20px;
   left: -10px;
-  opacity: 0;
+  /* opacity: 0; */
+  visibility: hidden;
   width: 170px;
   padding: 50px;
   height: 513px;
@@ -104,7 +110,8 @@ span {
 {
   padding: 10px 0;
   font-size: 22px;
-  opacity: 1;
+  /* opacity: 1; */
+  display: block;
 }
 
 /* Stats och About! */
@@ -142,4 +149,9 @@ span {
 
 ul li {
   cursor: pointer;
+}
+
+.modal-dialog {
+    width: 287px;
+    margin: 12.75rem auto;
 }

@@ -20,7 +20,7 @@ class Stats extends Component {
     const { show } = this.state;
 
     let gamesPlayed = JSON.parse(localStorage.getItem("gamesPlayed"));
-    let highScore = JSON.parse(localStorage.getItem("highscore")); // kanske ändrar senare variabeln i localStorage till correctScore!
+    let highScore = JSON.parse(localStorage.getItem("highscore"));
 
     let incorrectAnswers = gamesPlayed * 10 - highScore;
 
@@ -30,8 +30,8 @@ class Stats extends Component {
       <Modal show={show} onHide={this.handleModal} backdrop="static">
         <Modal.Header closeButton><h2 tabIndex="0">Stats</h2></Modal.Header>
         <Modal.Body style={{ margin: '0 auto' }} >
-          <h3 tabIndex="0´1">Games played: <strong>{gamesPlayed}</strong></h3>
-          <h3 tabIndex="0">Your score is: <strong>{highScore}</strong></h3>
+          <h3 tabIndex="0">Games played: <strong>{gamesPlayed}</strong></h3>
+          <h3 tabIndex="0">Correct answers: <strong>{highScore}</strong></h3>
           <h3 tabIndex="0">Incorrect answers: <strong>{incorrectAnswers}</strong></h3>
         </Modal.Body>
       </Modal>

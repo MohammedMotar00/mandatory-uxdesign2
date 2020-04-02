@@ -46,6 +46,7 @@ class HamburgerButton extends Component {
   }
 
   closeBtn = () => {
+    this.setState({ checked: false });
     this.setState({ activeAbout: false });
     this.setState({ activeStats: false });
   }
@@ -60,13 +61,13 @@ class HamburgerButton extends Component {
     return (
       <>
         <FocusTrap active={focus}>
-        <nav role="navigation" id="menuToggle">
+        <nav role="navigation" className="menuToggle">
             <input aria-label="menu button" type="checkbox" checked={checked} onChange={this.handleChange.bind(this)} className="hamburger-input" />
             <span></span>
             <span></span>
             <span></span>
             <ul className="menu">
-              <li onClick={this.unCheck}>Close </li>
+              <li> <button className="btn btn-primary" onClick={this.closeBtn}>Close</button></li>
               <li><Stats handleFocus={this.handleFocus} /></li>
               <li><About handleFocus={this.handleFocus} /></li>
             </ul>

@@ -26,6 +26,7 @@ class Game extends Component {
     }
   }
 
+  // Funkationen som sätter igång mitt spel :)
   startGame = () => {
     this.setState({ gameStarted: true });
     this.setState({ show: false });
@@ -53,32 +54,29 @@ class Game extends Component {
     axios('https://opentdb.com/api.php?amount=10&type=multiple')
     .then(res => {
       res.data.results.map(q => {
-        // console.log(q);
-
+        // Här skapar jag en variable som kommer innehålla frågor och alla svar och rätt svar
         const newQuestion = {
           question: q.question
         };
 
+        // i denna variabeln så kopierar jag o sparar alla fel svar
         const answerChoises = [ ...q.incorrect_answers ];
-        // console.log(answerChoises);
 
+        // här i Math.floor(Math.random() * 3) + 1; så gör jag så att riktiga svaret kommer blandas med mina svar, så inte riktiga svaret hanmar alltid först eller hanmar alltid sist!
         newQuestion.answer = Math.floor(Math.random() * 3) + 1;
+        // här sparar jag riktiga svaret men kommer inte renderas ut, utan används senare för att kunna checka ifall den radio button jag har checkat in stämmer med riktiga svaret eller inte
         newQuestion.realAnswer = q.correct_answer;
-        // console.log(newQuestion);
 
         answerChoises.splice(
           newQuestion.answer -1,
           0,
           q.correct_answer
         );
-        // console.log(answerChoises);
 
+        // i denna forEach() så skapar jag en choice metod beroende på hur många svar jag har, och här är de alla mina svar, både rätt o fel, och kallar de för choice
         answerChoises.forEach((choice, index) => {
           newQuestion['choice' + (index + 1)] = choice;
         });
-
-        // console.log(answerChoises);
-        // console.log(newQuestion);
 
         let myQuizzArr = this.state.quizz;
         myQuizzArr.push(newQuestion);
@@ -88,6 +86,7 @@ class Game extends Component {
     })
   }
 
+  // Denna funktionen används i modal, och den funkar när jag ska klicka på Return to main!
   closeGame = () => {
     this.setState({ gameStarted: false });
     this.setState({ show: false });
@@ -134,8 +133,6 @@ class Game extends Component {
   }
 
   onChange = (svar, myChoice, e) => {
-    // svar, myChoice, e
-
     let myAnswers = this.state.answered;
     myAnswers.push(myChoice);
     this.setState({ answered: myAnswers });
@@ -148,14 +145,14 @@ class Game extends Component {
   render() {
     const { gameStarted, quizz, correctAnswers, show } = this.state;
 
-    let hideBtn = '';
+    let hideBtn = 'show-start-btn';
     let showModalBox = '';
 
     if (gameStarted) {
       hideBtn = 'hide-start-btn';
       showModalBox = '';
     } else {
-      hideBtn = '';
+      hideBtn = 'show-start-btn';
       showModalBox = 'modalBtn';
     }
 
@@ -163,7 +160,6 @@ class Game extends Component {
       <>
       <button className={hideBtn} onClick={this.startGame}>Start Game</button>
         {quizz.map(x => {
-          // console.log(x);
           const entities = {
             '&#039;': "'",
             '&quot;': '"',
@@ -176,7 +172,6 @@ class Game extends Component {
           }
 
           let svar = x.realAnswer.replace(/&#?\w+;/g, match => entities[match]);
-
           let questions = x.question.replace(/&#?\w+;/g, match => entities[match]);
           let choice1 = x.choice1.replace(/&#?\w+;/g, match => entities[match]);
           let choice2 = x.choice2.replace(/&#?\w+;/g, match => entities[match]);
@@ -209,16 +204,16 @@ class Game extends Component {
               </div>
             </ul>
             </form>
+            <hr/>
             </>
           )
         })}
         <div className={showModalBox}>
-          <Button onClick={this.handleModal}>Finish game!</Button>
+          <Button aria-label="finish game button" onClick={this.handleModal}>Finish game</Button>
           <Modal show={show} onHide={this.handleModal} backdrop="static">
-            <Modal.Header closeButton>Modal Head</Modal.Header>
+            <Modal.Header closeButton><h3 tabIndex="0">The game is over</h3></Modal.Header>
             <Modal.Body>
-              <h1>Your score is:</h1>
-              <h3>{correctAnswers} / 10</h3>
+              <h1 tabIndex="0">Your score is:<h3>{correctAnswers} / 10</h3></h1>
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={this.startGame}>Restart Game</Button>

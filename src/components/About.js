@@ -13,6 +13,7 @@ class About extends Component {
 
   handleModal = () => {
     this.setState({ show: !this.state.show });
+    this.props.handleFocus();
   }
 
   render() {

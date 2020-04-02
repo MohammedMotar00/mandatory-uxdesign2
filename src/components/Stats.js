@@ -13,6 +13,7 @@ class Stats extends Component {
 
   handleModal = () => {
     this.setState({ show: !this.state.show });
+    this.props.handleFocus();
   }
 
   render() {
@@ -25,7 +26,7 @@ class Stats extends Component {
 
     return (
       <>
-      <Button  onClick={this.handleModal}>Stats</Button>
+      <Button onClick={this.handleModal}>Stats</Button>
       <Modal show={show} onHide={this.handleModal} backdrop="static">
         <Modal.Header closeButton><h2>Stats</h2></Modal.Header>
         <Modal.Body style={{ margin: '0 auto' }} >

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 
+import FocusTrap from 'focus-trap-react';
+
 import '../css/hamburger-button.css';
 
-import { Button, Modal } from 'react-bootstrap'
 import About from './About';
 import Stats from './Stats';
 
@@ -15,7 +16,7 @@ class HamburgerButton extends Component {
       activeAbout: false,
 
       checked: false,
-      show: false
+      focus: false
     }
   }
 
@@ -28,6 +29,7 @@ class HamburgerButton extends Component {
   handleChange(e) {
     if(this.state.checked !== e.target.checked) {
       this.setState({ checked: e.target.checked });
+      this.setState({ focus: e.target.checked });
     }
     this.setState({ activeAbout: false });
     this.setState({ activeStats: false });
@@ -48,40 +50,28 @@ class HamburgerButton extends Component {
     this.setState({ activeStats: false });
   }
 
-  handleModal = () => {
-    this.setState({ show: !this.state.show });
+  handleFocus = () => {
+    this.setState({ focus: !this.state.focus });
   }
 
   render() {
-    const { activeStats, activeAbout } = this.state;
-
-    let showAbout = '';
-    if (activeAbout) {
-      showAbout = 'clickedAbout';
-    } else {
-      showAbout = 'notClicked';
-    }
-
-    let showStats = '';
-    if (activeStats) {
-      showStats = 'clickedStats';
-    } else {
-      showStats = 'notClicked';
-    }
+    const { focus, checked } = this.state;
 
     return (
       <>
+        <FocusTrap active={focus}>
         <nav role="navigation" id="menuToggle">
-          <input type="checkbox" checked={this.state.checked} onChange={this.handleChange.bind(this)} />
-          <span onClick></span>
-          <span></span>
-          <span></span>
-          <ul className="menu">
-            <li onClick={this.unCheck}>Close </li>
-            <li><Stats /></li>
-            <li><About /></li>
-          </ul>
+            <input type="checkbox" checked={checked} onChange={this.handleChange.bind(this)} />
+            <span onClick></span>
+            <span></span>
+            <span></span>
+            <ul className="menu">
+              <li onClick={this.unCheck}>Close </li>
+              <li><Stats handleFocus={this.handleFocus} /></li>
+              <li><About handleFocus={this.handleFocus} /></li>
+            </ul>
         </nav>
+        </FocusTrap>
       </>
     )
   }

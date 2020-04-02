@@ -150,8 +150,3 @@ span {
 ul li {
   cursor: pointer;
 }
-
-.modal-dialog {
-    width: 287px;
-    margin: 12.75rem auto;
-}

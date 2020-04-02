@@ -6,8 +6,6 @@ import '../css/game.css';
 
 import { Button, Modal } from 'react-bootstrap';
 
-let playedGames = 0;
-
 class Game extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +19,8 @@ class Game extends Component {
       correctAnswers: '',
       updatedCorrectAnswers: '',
 
-      show: false
+      show: false,
+      playedGames: 0
     }
   }
 
@@ -32,9 +31,6 @@ class Game extends Component {
     this.setState({ quizz: [] });
     this.setState({ answered: [] });
     this.setState({ rightAnswers: [] });
-    // this.setState({ correctAnswers: '' });
-
-    playedGames++;
 
     let gamesPlayed = JSON.parse(localStorage.getItem("gamesPlayed"));
 
@@ -150,7 +146,7 @@ class Game extends Component {
 
 
   render() {
-    const { gameStarted, quizz, correctAnswers } = this.state;
+    const { gameStarted, quizz, correctAnswers, show } = this.state;
 
     let hideBtn = '';
     let showModalBox = '';
@@ -216,22 +212,17 @@ class Game extends Component {
             </>
           )
         })}
-        {/* <button onClick={this.clickMe}>klick</button> */}
         <div className={showModalBox}>
           <Button onClick={this.handleModal}>Finish game!</Button>
-          <Modal show={this.state.show} onHide={this.handleModal} backdrop="static">
+          <Modal show={show} onHide={this.handleModal} backdrop="static">
             <Modal.Header closeButton>Modal Head</Modal.Header>
             <Modal.Body>
               <h1>Your score is:</h1>
               <h3>{correctAnswers} / 10</h3>
             </Modal.Body>
             <Modal.Footer>
-              <Button onClick={this.startGame}>
-                Restart Game
-              </Button>
-              <Button onClick={this.closeGame}>
-                Return to Main
-              </Button>
+              <Button onClick={this.startGame}>Restart Game</Button>
+              <Button onClick={this.closeGame}>Return to Main</Button>
             </Modal.Footer>
           </Modal>
         </div>

@@ -14,7 +14,6 @@ class Main extends Component {
           </header>
 
           <main>
-            {/* <button className="CenterButton">Start Quiz</button> */}
             <Game />
           </main>
         </div>

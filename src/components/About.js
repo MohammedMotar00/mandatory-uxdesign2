@@ -20,11 +20,11 @@ class About extends Component {
     const { show } = this.state;
     return (
       <>
-      <Button  onClick={this.handleModal}>About</Button>
+      <Button aria-label="About button" onClick={this.handleModal}>About</Button>
       <Modal show={show} onHide={this.handleModal} backdrop="static">
-      <Modal.Header closeButton><h2>About</h2></Modal.Header>
+      <Modal.Header closeButton><h2 tabIndex="0">About</h2></Modal.Header>
       <Modal.Body style={{ margin: '0 auto' }} >
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda voluptas quaerat qui eaque, mollitia similique quisquam, alias officia possimus facilis totam a, sed eius obcaecati sapiente quia tenetur quas rem.</p>
+        <p tabIndex="0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda voluptas quaerat qui eaque, mollitia similique quisquam, alias officia possimus facilis totam a, sed eius obcaecati sapiente quia tenetur quas rem.</p>
       </Modal.Body>
       </Modal>
       </>

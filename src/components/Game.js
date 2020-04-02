@@ -20,7 +20,9 @@ class Game extends Component {
       updatedCorrectAnswers: '',
 
       show: false,
-      playedGames: 0
+      playedGames: 0,
+
+      checked: false
     }
   }
 
@@ -92,7 +94,6 @@ class Game extends Component {
     this.setState({ quizz: [] });
     this.setState({ answered: [] });
     this.setState({ rightAnswers: [] });
-    // this.setState({ correctAnswers: '' });
   }
 
   handleModal = () => {
@@ -106,8 +107,6 @@ class Game extends Component {
     let answers = 0;
 
     for (let i = 0; i < allAnswers.length; i++) {
-      // console.log(allAnswers[i]);
-      // console.log(i);
       if (allrightAnswers[i] === allAnswers[i]) {
         console.log('right answer');
         answers++
@@ -134,7 +133,9 @@ class Game extends Component {
     this.setState({ correctAnswers: answers });
   }
 
-  onChange = (svar, myChoice) => {
+  onChange = (svar, myChoice, e) => {
+    // svar, myChoice, e
+
     let myAnswers = this.state.answered;
     myAnswers.push(myChoice);
     this.setState({ answered: myAnswers });
@@ -143,7 +144,6 @@ class Game extends Component {
     myRightAnswers.push(svar);
     this.setState({ rightAnswers: myRightAnswers });
   }
-
 
   render() {
     const { gameStarted, quizz, correctAnswers, show } = this.state;
@@ -186,25 +186,25 @@ class Game extends Component {
           return (
             <>
             <form>
-            <p className="question">{questions}</p>
-            <ul className="answer-ul">
-              <div className="answers-div">
-                <input type="radio" id={choice1} className="answers" name="question" value={choice1} onChange={() => this.onChange(svar, choice1)} />
+            <p aria-label={`The question is ${questions}`} className="question">{questions}</p>
+            <ul aria-label={'list of answers'} className="answer-ul">
+              <div aria-label="" className="answers-div">
+                <input aria-label={`radio button ${choice1}`} type="radio" id={choice1} className="answers" name="question" value={choice1} onChange={() => this.onChange(svar, choice1)} />
                 <label htmlFor={choice1}>{choice1}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={choice2} className="answers" name="question" value={choice2} onChange={() => this.onChange(svar, choice2)} />
+                <input aria-label={`radio button ${choice2}`} type="radio" id={choice2} className="answers" name="question" value={choice2} onChange={() => this.onChange(svar, choice2)} />
                 <label htmlFor={choice2}>{choice2}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={choice3} className="answers" name="question" value={choice3} onChange={() => this.onChange(svar, choice3)} />
+                <input aria-label={`radio button ${choice3}`} type="radio" id={choice3} className="answers" name="question" value={choice3} onChange={() => this.onChange(svar, choice3)} />
                 <label htmlFor={choice3}>{choice3}</label>
               </div>
 
               <div className="answers-div">
-                <input type="radio" id={choice4} className="answers" name="question" value={choice4} onChange={() => this.onChange(svar, choice4)} />
+                <input aria-label={`radio button ${choice4}`} type="radio" id={choice4} className="answers" name="question" value={choice4} onChange={() => this.onChange(svar, choice4)} />
                 <label htmlFor={choice4}>{choice4}</label>
               </div>
             </ul>

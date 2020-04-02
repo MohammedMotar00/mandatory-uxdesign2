@@ -61,8 +61,8 @@ class HamburgerButton extends Component {
       <>
         <FocusTrap active={focus}>
         <nav role="navigation" id="menuToggle">
-            <input type="checkbox" checked={checked} onChange={this.handleChange.bind(this)} />
-            <span onClick></span>
+            <input aria-label="menu button" type="checkbox" checked={checked} onChange={this.handleChange.bind(this)} className="hamburger-input" />
+            <span></span>
             <span></span>
             <span></span>
             <ul className="menu">

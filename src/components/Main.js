@@ -10,7 +10,7 @@ class Main extends Component {
         <div className="screen">
           <header>
             <HamburgerButton />
-            <h1>Quiz Master</h1>
+            <h1 tabIndex="0" aria-label="Quiz Master">Quiz Master</h1>
           </header>
 
           <main>

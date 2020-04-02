@@ -26,13 +26,13 @@ class Stats extends Component {
 
     return (
       <>
-      <Button onClick={this.handleModal}>Stats</Button>
+      <Button aria-label="Stats button" onClick={this.handleModal}>Stats</Button>
       <Modal show={show} onHide={this.handleModal} backdrop="static">
-        <Modal.Header closeButton><h2>Stats</h2></Modal.Header>
+        <Modal.Header closeButton><h2 tabIndex="0">Stats</h2></Modal.Header>
         <Modal.Body style={{ margin: '0 auto' }} >
-          <h3>Games played: <strong>{gamesPlayed}</strong></h3>
-          <h3>Your score is: <strong>{highScore}</strong></h3>
-          <h3>Incorrect answers: <strong>{incorrectAnswers}</strong></h3>
+          <h3 tabIndex="0´1">Games played: <strong>{gamesPlayed}</strong></h3>
+          <h3 tabIndex="0">Your score is: <strong>{highScore}</strong></h3>
+          <h3 tabIndex="0">Incorrect answers: <strong>{incorrectAnswers}</strong></h3>
         </Modal.Body>
       </Modal>
       </>

@@ -20,9 +20,7 @@ class Game extends Component {
       updatedCorrectAnswers: '',
 
       show: false,
-      playedGames: 0,
-
-      checked: false
+      playedGames: 0
     }
   }
 
@@ -98,8 +96,6 @@ class Game extends Component {
   handleModal = () => {
     this.setState({ show: !this.state.show });
 
-    this.setState({ openDialog: true });
-
     let allAnswers = this.state.answered;
     let allrightAnswers = this.state.rightAnswers;
 
@@ -132,7 +128,7 @@ class Game extends Component {
     this.setState({ correctAnswers: answers });
   }
 
-  onChange = (svar, myChoice, e) => {
+  onChange = (svar, myChoice) => {
     let myAnswers = this.state.answered;
     myAnswers.push(myChoice);
     this.setState({ answered: myAnswers });
@@ -159,7 +155,7 @@ class Game extends Component {
     return (
       <>
       <button className={hideBtn} onClick={this.startGame}>Start Game</button>
-        {quizz.map(x => {
+        {quizz.map((x, id) => {
           const entities = {
             '&#039;': "'",
             '&quot;': '"',
@@ -182,7 +178,7 @@ class Game extends Component {
             <>
             <form>
             <p aria-label={`The question is ${questions}`} className="question">{questions}</p>
-            <ul aria-label={'list of answers'} className="answer-ul">
+            <ul key={id} aria-label={'list of answers'} className="answer-ul">
               <div aria-label="" className="answers-div">
                 <input aria-label={`radio button ${choice1}`} type="radio" id={choice1} className="answers" name="question" value={choice1} onChange={() => this.onChange(svar, choice1)} />
                 <label htmlFor={choice1}>{choice1}</label>
